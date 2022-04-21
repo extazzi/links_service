@@ -13,6 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\Links\LinkController::class, 'index'])->name('index.link');
+Route::post('/create',  [App\Http\Controllers\Links\LinkController::class, 'create'])->name('create.link');
