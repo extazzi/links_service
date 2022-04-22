@@ -4,17 +4,17 @@
 namespace App\Services\Links\DTO;
 
 
+use App\Models\Link;
+
 class LinkCustomDTO
 {
 
     public $link;
     public $status;
-    public $code;
 
-    protected function __construct(string $link, string $code, int $status)
+    protected function __construct(Link|null $link, int $status)
     {
         $this->link = $link;
-        $this->code = $code;
         $this->status = $status;
     }
 
@@ -22,7 +22,6 @@ class LinkCustomDTO
     {
         return new self(
             $data['link'],
-            $data['code'],
             $data['status'],
         );
     }

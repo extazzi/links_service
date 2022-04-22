@@ -2,6 +2,8 @@
 
 namespace App\Services\Links\Providers;
 
+use App\Events\LinkEvent;
+use App\Models\Link;
 use App\Repositories\LinkRepository;
 use App\Services\Links\DTO\LinkCustomDTO;
 use Illuminate\Support\Str;
@@ -19,26 +21,31 @@ class LinkCustomProvider implements LinkProviderInterface
         return $code;
     }
 
-    public function save(array $data): LinkCustomDTO
-    {
-        return LinkRepository::saveLink($data);
-    }
-
     public function getLink(string $code): LinkCustomDTO
     {
         return LinkRepository::getLinkByCode($code);
     }
 
-    public function redirectToLink(string $code)
+    public function save(array $data): LinkCustomDTO
     {
-        $DTO = $this->getLink($code);
+        return LinkRepository::saveLink($data);
+    }
 
-        if ($DTO->status == 200) {
+    public function redirectToLink(LinkCustomDTO $linkCustomDTO)
+    {
+        if ($linkCustomDTO->status == 200) {
 
-            return redirect()->away($DTO->link);
+            return redirect()->away($linkCustomDTO->link->resource_link);
         }
 
         abort(404);
+    }
+
+    public function incrementVisited(Link|null $link)
+    {
+        if ($link !== null) {
+            event(new LinkEvent($link));
+        }
     }
 
     private function generateRandomCode(): string

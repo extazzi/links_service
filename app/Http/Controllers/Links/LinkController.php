@@ -22,7 +22,7 @@ class LinkController extends Controller
         $DTO = $linkService->save($data);
 
         if ($DTO->status == 201) {
-            $textSMS = "The link <a href='" . route('link.code', $DTO->code) . "' target='_blank'>" . route('link.code', $DTO->code) . "</a>  was created.";
+            $textSMS = "The link <a href='" . route('link.code', $DTO->link->code) . "' target='_blank'>" . route('link.code', $DTO->link->code) . "</a>  was created.";
 
             return redirect()->route('link.create')->with('success', $textSMS);
         }
@@ -30,6 +30,10 @@ class LinkController extends Controller
 
     public function move(string $code, LinkService $linkService)
     {
-       return $linkService->redirect($code);
+        $linkCustomDTO = $linkService->getLink($code);
+
+        $linkService->increaseVisited($linkCustomDTO->link);
+
+        return $linkService->redirect($linkCustomDTO);
     }
 }

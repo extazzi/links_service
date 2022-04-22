@@ -2,6 +2,8 @@
 
 namespace App\Services\Links;
 
+use App\Models\Link;
+use App\Services\Links\DTO\LinkCustomDTO;
 use App\Services\Links\Providers\LinkProviderInterface;
 
 class LinkService
@@ -18,13 +20,23 @@ class LinkService
         return $this->linkProvider->generate();
     }
 
-    public function redirect(string $code)
+    public function redirect(LinkCustomDTO $linkCustomDTO)
     {
-        return $this->linkProvider->redirectToLink($code);
-    }  
-    
-    public function save(array $data)
+        return $this->linkProvider->redirectToLink($linkCustomDTO);
+    }
+
+    public function save(array $data): LinkCustomDTO
     {
         return $this->linkProvider->save($data);
+    }
+
+    public function getLink(string $code): LinkCustomDTO
+    {
+        return $this->linkProvider->getLink($code);
+    }
+
+    public function increaseVisited(Link|null $link)
+    {
+        $this->linkProvider->incrementVisited($link);
     }
 }

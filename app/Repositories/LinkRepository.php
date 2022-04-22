@@ -4,22 +4,22 @@ namespace App\Repositories;
 
 use App\Models\Link;
 use App\Services\Links\DTO\LinkCustomDTO;
-use Carbon\Carbon;
 
 class LinkRepository
 {
     public static function saveLink(array $data): LinkCustomDTO
     {
-        Link::create([
-            'resource_link' => $data['resource_link'],
-            'code' => $data['code'],
-            'limit' => $data['limit'],
-            'expired' => $data['expired'],
-        ]);
+        $link = new Link;
+
+        $link->resource_link = $data['resource_link'];
+        $link->code = $data['code'];
+        $link->limit = $data['limit'];
+        $link->expired = $data['expired'];
+
+        $link->save();
 
         return LinkCustomDTO::fromArray([
-            'link' => $data['resource_link'],
-            'code' => $data['code'],
+            'link' => $link,
             'status' => 201,
         ]);
     }
@@ -50,15 +50,13 @@ class LinkRepository
 
         if ($link) {
             return LinkCustomDTO::fromArray([
-                'link' => $link->resource_link,
-                'code' => $link->code,
+                'link' => $link,
                 'status' => 200,
             ]);
         }
 
         return LinkCustomDTO::fromArray([
-            'link' => '',
-            'code' => '',
+            'link' => null,
             'status' => 404,
         ]);
     }
