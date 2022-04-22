@@ -16,7 +16,7 @@
                         @endif
                             @if ($message = Session::get('success'))
                                 <div class="alert alert-success">
-                                    <p>{{ $message }}</p>
+                                    <p>{!! $message !!}</p>
                                 </div>
                             @endif
                         <form action="{{ route('link.store') }}" method="post" enctype="multipart/form-data" id="form-link" class="form-horizontal">

@@ -17,4 +17,14 @@ class LinkService
     {
         return $this->linkProvider->generate();
     }
+
+    public function redirect(string $code)
+    {
+        return $this->linkProvider->redirectToLink($code);
+    }  
+    
+    public function save(array $data)
+    {
+        return $this->linkProvider->save($data);
+    }
 }

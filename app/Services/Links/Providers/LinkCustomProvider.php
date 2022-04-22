@@ -3,21 +3,17 @@
 namespace App\Services\Links\Providers;
 
 use App\Repositories\LinkRepository;
+use App\Services\Links\DTO\LinkCustomDTO;
 use Illuminate\Support\Str;
 
 class LinkCustomProvider implements LinkProviderInterface
 {
     public function generate(): string
     {
-        return $this->generateUniqueCode();
-    }
-
-    private function generateUniqueCode(): string
-    {
         $code = $this->generateRandomCode();
         $checked = self::checkUniqueCode($code);
         if (!$checked) {
-            $this->generateUniqueCode($code);
+            $this->generate();
         }
 
         return $code;
@@ -31,5 +27,27 @@ class LinkCustomProvider implements LinkProviderInterface
     private function checkUniqueCode(string $code): bool
     {
         return LinkRepository::checkedUniqueCode($code);
+    }
+
+    public function getLink(string $code): LinkCustomDTO
+    {
+        return LinkRepository::getLinkByCode($code);
+    }
+
+    public function save(array $data): LinkCustomDTO
+    {
+        return LinkRepository::saveLink($data);
+    }
+
+    public function redirectToLink(string $code)
+    {
+        $DTO = $this->getLink($code);
+
+        if ($DTO->status == 200) {
+
+            return redirect()->away($DTO->link);
+        }
+
+        abort(404);
     }
 }
