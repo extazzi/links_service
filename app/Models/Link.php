@@ -22,6 +22,7 @@ class Link extends Model
         'resource_link',
         'code',
         'limit',
-        'lifetime',
+        'expired',
+        'visited',
     ];
 }

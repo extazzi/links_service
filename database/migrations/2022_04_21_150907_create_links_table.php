@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->string('resource_link', '255')->unique();
+            $table->string('resource_link', '255');
             $table->string('code', '8')->unique();
-            $table->integer('limit')->nullable();
-            $table->integer('lifetime')->nullable();
+            $table->tinyInteger('limit')->default('0');
+            $table->tinyInteger('visited')->default('0');
+            $table->timestamp('expired');
         });
     }
 

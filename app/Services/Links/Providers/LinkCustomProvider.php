@@ -19,24 +19,14 @@ class LinkCustomProvider implements LinkProviderInterface
         return $code;
     }
 
-    private function generateRandomCode(): string
+    public function save(array $data): LinkCustomDTO
     {
-        return str_shuffle(Str::upper(Str::random(3)) . Str::lower(Str::random(3)) . mt_rand(10, 99));
-    }
-
-    private function checkUniqueCode(string $code): bool
-    {
-        return LinkRepository::checkedUniqueCode($code);
+        return LinkRepository::saveLink($data);
     }
 
     public function getLink(string $code): LinkCustomDTO
     {
         return LinkRepository::getLinkByCode($code);
-    }
-
-    public function save(array $data): LinkCustomDTO
-    {
-        return LinkRepository::saveLink($data);
     }
 
     public function redirectToLink(string $code)
@@ -49,5 +39,15 @@ class LinkCustomProvider implements LinkProviderInterface
         }
 
         abort(404);
+    }
+
+    private function generateRandomCode(): string
+    {
+        return str_shuffle(Str::upper(Str::random(3)) . Str::lower(Str::random(3)) . mt_rand(10, 99));
+    }
+
+    private function checkUniqueCode(string $code): bool
+    {
+        return LinkRepository::checkedUniqueCode($code);
     }
 }

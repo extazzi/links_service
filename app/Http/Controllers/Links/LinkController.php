@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Links;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Links\LinkRequest;
-use App\Repositories\LinkRepository;
 use App\Services\Links\LinkService;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LinkController extends Controller
 {
@@ -24,7 +22,8 @@ class LinkController extends Controller
         $DTO = $linkService->save($data);
 
         if ($DTO->status == 201) {
-            $textSMS = 'The link <a href="' . route('link.code', $DTO->code) . '" target="_blank">  was created.';
+            $textSMS = "The link <a href='" . route('link.code', $DTO->code) . "' target='_blank'>" . route('link.code', $DTO->code) . "</a>  was created.";
+
             return redirect()->route('link.create')->with('success', $textSMS);
         }
     }

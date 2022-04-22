@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Link;
 use App\Services\Links\DTO\LinkCustomDTO;
+use Carbon\Carbon;
 
 class LinkRepository
 {
@@ -13,7 +14,7 @@ class LinkRepository
             'resource_link' => $data['resource_link'],
             'code' => $data['code'],
             'limit' => $data['limit'],
-            'lifetime' => $data['lifetime'],
+            'expired' => $data['expired'],
         ]);
 
         return LinkCustomDTO::fromArray([
@@ -37,8 +38,14 @@ class LinkRepository
     public static function getLinkByCode(string $code): LinkCustomDTO
     {
         $link = Link::where('code', $code)
-//            ->where('limit', '>', 0)
-//            ->where('limit', '>', 0)
+            ->where('expired', '>=', date("Y-m-d-H:i:s"))
+            ->where(function ($query) {
+                $query->where('limit', '=', 0);
+                $query->orWhere(function($q) {
+                    $q->where('limit', '>', 0);
+                    $q->whereColumn('visited', '<', 'limit');
+                });
+            })
             ->first();
 
         if ($link) {

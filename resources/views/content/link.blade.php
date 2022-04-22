@@ -36,7 +36,7 @@
                             <div class="row mb-3">
                                 <label class="col-sm-3 control-label" for="input-status">Enter link lifetime</label>
                                 <div class="col-sm-8">
-                                    <input name="lifetime" type="number" min="0" max="24" placeholder="maximum 24 hours" class="form-control">
+                                    <input name="expired" type="number" min="1" max="24" placeholder="maximum 24 hours" class="form-control">
                                 </div>
                             </div>
 
