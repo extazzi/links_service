@@ -2,7 +2,6 @@
 
 namespace App\Http\Request\Links;
 
-
 use App\Http\Request\Request;
 
 class LinkRequest extends Request

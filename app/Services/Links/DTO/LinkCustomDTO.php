@@ -8,7 +8,6 @@ use App\Models\Link;
 
 class LinkCustomDTO
 {
-
     public $link;
     public $status;
 

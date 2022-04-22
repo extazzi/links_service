@@ -8,7 +8,6 @@ use Illuminate\Support\Arr;
 
 class Request extends FormRequest
 {
-
     const DEFAULT_LIMIT_VALUE = 0;
     const DEFAULT_EXPIRED_VALUE = 24;
 
