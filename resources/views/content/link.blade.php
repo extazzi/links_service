@@ -44,10 +44,6 @@
                                 <button class="btn btn-primary" type="submit">SEND</button>
                             </div>
                         </form>
-                        <div class="row mb-3">
-                            <div class="col-sm-12" id="list-users">
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
