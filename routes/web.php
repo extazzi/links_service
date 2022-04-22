@@ -13,5 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\Links\LinkController::class, 'index'])->name('index.link');
-Route::post('/create',  [App\Http\Controllers\Links\LinkController::class, 'create'])->name('create.link');
+Route::get('/', [App\Http\Controllers\Links\LinkController::class, 'create'])->name('link.create');
+Route::resource('link', App\Http\Controllers\Links\LinkController::class);

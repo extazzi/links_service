@@ -14,7 +14,12 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ route('create.link') }}" method="post" enctype="multipart/form-data" id="form-link" class="form-horizontal">
+                            @if ($message = Session::get('success'))
+                                <div class="alert alert-success">
+                                    <p>{{ $message }}</p>
+                                </div>
+                            @endif
+                        <form action="{{ route('link.store') }}" method="post" enctype="multipart/form-data" id="form-link" class="form-horizontal">
                             @csrf
                             <div class="row mb-3">
                                 <label class="col-sm-3 control-label" for="input-status">Enter link</label>

@@ -10,17 +10,18 @@ use App\Services\Links\LinkService;
 class LinkController extends Controller
 {
 
-    public function index()
+    public function create()
     {
         return view('content.link');
     }
 
-    public function create(LinkRequest $linkRequest, LinkService $linkService)
+    public function store(LinkRequest $linkRequest, LinkService $linkService)
     {
         $data = $linkRequest->getFormData();
         $data['code'] = $linkService->generateCode();
 
         LinkRepository::saveLink($data);
-        return view('content.link');
+
+        return redirect()->route('link.create')->with('success','The link was created.');
     }
 }
